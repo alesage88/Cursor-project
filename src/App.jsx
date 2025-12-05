@@ -1306,13 +1306,13 @@ export default function App() {
           {!isSidebarCollapsed && (
             <div className="overflow-hidden">
                 <h1 className="text-xl font-bold flex items-center gap-2 whitespace-nowrap">
-                    <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center font-bold flex-shrink-0">T</div>
+                    <img src="/favicon.svg" alt="Tervene Logo" className="w-8 h-8 flex-shrink-0" />
                     Tervene
                 </h1>
                 <p className="text-xs text-slate-400 mt-1 whitespace-nowrap">Analytics v8.6</p>
             </div>
           )}
-          {isSidebarCollapsed && <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center font-bold flex-shrink-0 mx-auto">T</div>}
+          {isSidebarCollapsed && <img src="/favicon.svg" alt="Tervene" className="w-8 h-8 flex-shrink-0 mx-auto" />}
           <button onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)} className="p-1 rounded hover:bg-slate-800 text-slate-400">
             {isSidebarCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
           </button>
