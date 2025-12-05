@@ -29,10 +29,15 @@
 
 name: 'Deploy to Cloud Run from Source'
 
+#on:
+ # push:
+   # branches:
+      #- '"main"'
+
+      
 on:
-  push:
-    branches:
-      - '"main"'
+  workflow_dispatch:
+
 
 env:
   PROJECT_ID: 'e-tensor-480111-m3' # TODO: update to your Google Cloud project ID
