@@ -1,0 +1,265 @@
+═══════════════════════════════════════════════════════════════
+  ✅ CORRECTION - DRILL-DOWN UNIQUEMENT SUR VARIATION
+═══════════════════════════════════════════════════════════════
+
+🎯 DEMANDE DE L'UTILISATEUR
+────────────────────────────────────────────────────────────────
+
+Le drill-down (fenêtre modale avec détails) ne devrait être
+disponible QUE sur le graphique "Variation Mensuelle".
+
+Il ne devrait PAS être disponible sur "Composition du MRR Actif".
+
+════════════════════════════════════════════════════════════════
+
+✅ CORRECTION APPLIQUÉE
+────────────────────────────────────────────────────────────────
+
+GRAPHIQUE 1 : Composition du MRR Actif
+───────────────────────────────────────────────────────────────
+❌ AVANT : onClick présent → drill-down activé
+✅ APRÈS : onClick retiré → pas de drill-down
+
+CHANGEMENT :
+────────────
+• Retiré onClick sur les barres
+• Retiré onClick sur la légende
+• Retiré cursor="pointer"
+• Graphique reste visualisable mais non cliquable
+
+CODE MODIFIÉ :
+──────────────
+<Legend />  ← Plus d'onClick
+<Bar dataKey="Nouveau" stackId="a" fill="#3B82F6" />
+<Bar dataKey="Upsell" stackId="a" fill="#10B981" />
+<Bar dataKey="Cross-sell" stackId="a" fill="#8B5CF6" />
+            ↑ Plus d'onClick ni cursor="pointer"
+
+────────────────────────────────────────────────────────────────
+
+GRAPHIQUE 2 : Variation Mensuelle (CAD)
+───────────────────────────────────────────────────────────────
+✅ CONSERVÉ : onClick présent → drill-down actif
+
+COMPORTEMENT :
+──────────────
+• onClick sur chaque barre (New, Upsell, Cross, Churn)
+• Clic ouvre la modal avec les contrats du mois
+• cursor="pointer" indique que c'est cliquable
+• Brush (défilement) fonctionne sans conflit
+
+CODE INCHANGÉ :
+───────────────
+<Bar dataKey="New" onClick={handleVariationChartClick} cursor="pointer" />
+<Bar dataKey="Upsell" onClick={handleVariationChartClick} cursor="pointer" />
+<Bar dataKey="Cross" onClick={handleVariationChartClick} cursor="pointer" />
+<Bar dataKey="Churn" onClick={handleVariationChartClick} cursor="pointer" />
+                    ↑ Drill-down ACTIF
+
+════════════════════════════════════════════════════════════════
+
+📊 COMPORTEMENT ATTENDU
+────────────────────────────────────────────────────────────────
+
+ONGLET "REVENUS"
+────────────────────────────────────────────────────────────────
+
+┌─────────────────────────────────────────────────────────────┐
+│ 📊 Composition du MRR Actif (CAD)                          │
+│                                                              │
+│  [Graphique avec barres empilées]                          │
+│                                                              │
+│  • Survol des barres → Tooltip avec valeurs ✅             │
+│  • Clic sur les barres → RIEN (pas de drill-down) ✅       │
+│  • Brush → Défilement fonctionnel ✅                        │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│ 📊 Variation Mensuelle (CAD)                               │
+│                                                              │
+│  [Graphique avec barres + ligne Net]                       │
+│                                                              │
+│  • Survol des barres → Tooltip avec valeurs ✅             │
+│  • Clic sur les barres → MODAL AVEC DÉTAILS ✅             │
+│  • Brush → Défilement sans ouvrir modal ✅                 │
+└─────────────────────────────────────────────────────────────┘
+
+════════════════════════════════════════════════════════════════
+
+🎯 RAISON DE CETTE DISTINCTION
+────────────────────────────────────────────────────────────────
+
+COMPOSITION DU MRR ACTIF :
+──────────────────────────────────────────────────────────────
+• Affiche le MRR actif TOTAL par mois
+• Montre la composition (Nouveau + Upsell + Cross-sell)
+• Vue d'ensemble de l'évolution cumulative
+• Pas de notion de "mouvement" spécifique
+
+→ Drill-down N'A PAS DE SENS ici
+  (On ne peut pas dire quels contrats "affectent" un mois
+   car c'est la somme de TOUS les contrats actifs)
+
+VARIATION MENSUELLE :
+──────────────────────────────────────────────────────────────
+• Affiche les MOUVEMENTS du mois (nouveaux, sorties)
+• Montre les contrats qui COMMENCENT ce mois
+• Montre les contrats qui SE TERMINENT ce mois
+• Vue des changements spécifiques
+
+→ Drill-down FAIT SENS ici
+  (On peut lister exactement les contrats qui ont commencé
+   ou se sont terminés dans ce mois précis)
+
+════════════════════════════════════════════════════════════════
+
+🧪 TESTS À EFFECTUER
+────────────────────────────────────────────────────────────────
+
+TEST 1 : Composition du MRR Actif
+──────────────────────────────────────────────────────────────
+1. Aller dans l'onglet "Revenus"
+2. Voir le graphique "Composition du MRR Actif"
+3. Survoler une barre
+   ✅ Tooltip s'affiche avec les valeurs
+4. Cliquer sur une barre
+   ✅ RIEN ne se passe (pas de modal)
+5. Pas de curseur "pointer" (main)
+   ✅ Curseur normal (flèche)
+
+TEST 2 : Variation Mensuelle
+──────────────────────────────────────────────────────────────
+1. Descendre au graphique "Variation Mensuelle"
+2. Survoler une barre
+   ✅ Tooltip s'affiche avec les valeurs
+   ✅ Curseur "pointer" (main)
+3. Cliquer sur une barre bleue/verte/violette/rouge
+   ✅ Modal s'ouvre avec les contrats du mois
+4. Fermer la modal
+   ✅ Graphique reste stable
+
+TEST 3 : Brush (les deux graphiques)
+──────────────────────────────────────────────────────────────
+1. Utiliser le Brush sur "Composition"
+   ✅ Défilement fonctionne normalement
+2. Utiliser le Brush sur "Variation"
+   ✅ Défilement sans ouvrir de modal
+
+════════════════════════════════════════════════════════════════
+
+📁 FICHIER MODIFIÉ
+────────────────────────────────────────────────────────────────
+
+✓ src/App.jsx
+  - Ligne ~1470-1485 : Graphique Composition
+  
+  Changements :
+  ─────────────
+  • Retiré onClick de <Legend>
+  • Retiré onClick de toutes les <Bar>
+  • Retiré cursor="pointer" de toutes les <Bar>
+  • Retiré wrapperStyle={{cursor: 'pointer'}} de <Legend>
+
+════════════════════════════════════════════════════════════════
+
+✅ RÉSUMÉ FINAL DES COMPORTEMENTS
+────────────────────────────────────────────────────────────────
+
+GRAPHIQUE "COMPOSITION DU MRR ACTIF"
+───────────────────────────────────────────────────────────────
+✅ Affichage des barres empilées (Nouveau, Upsell, Cross-sell)
+✅ Ligne de total MRR
+✅ Brush pour défilement
+✅ Tooltip au survol
+❌ PAS de drill-down (clic ne fait rien)
+❌ PAS de curseur pointer
+
+GRAPHIQUE "VARIATION MENSUELLE"
+───────────────────────────────────────────────────────────────
+✅ Affichage des barres (New, Upsell, Cross, Churn)
+✅ Ligne Net
+✅ Brush pour défilement
+✅ Tooltip au survol
+✅ Drill-down ACTIF (clic ouvre modal)
+✅ Curseur pointer sur les barres
+
+════════════════════════════════════════════════════════════════
+
+🎨 EXPÉRIENCE UTILISATEUR
+────────────────────────────────────────────────────────────────
+
+AVANT LA CORRECTION :
+────────────────────────────────────────────────────────────────
+❌ Les deux graphiques étaient cliquables
+❌ Confusion : pourquoi les deux ont le même comportement ?
+❌ Drill-down sur Composition n'avait pas de sens
+
+APRÈS LA CORRECTION :
+────────────────────────────────────────────────────────────────
+✅ Seul le graphique "Variation" est cliquable
+✅ Comportement logique et cohérent
+✅ L'utilisateur sait où cliquer (curseur pointer)
+✅ Pas de confusion ni de comportement inattendu
+
+════════════════════════════════════════════════════════════════
+
+📋 HISTORIQUE DES CORRECTIONS
+────────────────────────────────────────────────────────────────
+
+CORRECTION 1 : Affichage des données
+────────────────────────────────────────────────────────────────
+✅ Fix détection des types (if/else if)
+✅ Toutes les barres maintenant visibles
+
+CORRECTION 2 : Interaction avec Brush
+────────────────────────────────────────────────────────────────
+✅ onClick déplacé sur les barres
+✅ Brush fonctionne sans conflit
+
+CORRECTION 3 : Drill-down fonctionnel
+────────────────────────────────────────────────────────────────
+✅ Support des deux formats de données
+✅ Modal s'ouvre correctement
+
+CORRECTION 4 : Drill-down uniquement sur Variation (ACTUELLE)
+────────────────────────────────────────────────────────────────
+✅ Retiré onClick du graphique Composition
+✅ Comportement cohérent et logique
+
+════════════════════════════════════════════════════════════════
+
+✅ STATUT FINAL
+────────────────────────────────────────────────────────────────
+
+✅ Affichage des données        : CORRIGÉ
+✅ Interaction Brush             : CORRIGÉ
+✅ Drill-down sur Variation      : CORRIGÉ & ACTIF
+✅ Drill-down sur Composition    : DÉSACTIVÉ (voulu)
+✅ Stabilité graphique           : CORRIGÉ
+✅ UX cohérente                  : CORRIGÉ
+
+════════════════════════════════════════════════════════════════
+
+🚀 PRÊT À TESTER !
+────────────────────────────────────────────────────────────────
+
+Tous les comportements sont maintenant corrects et logiques.
+
+Pour tester :
+  1. npm install
+  2. npm run dev
+  3. Onglet "Revenus"
+  4. Vérifier :
+     • "Composition" → Pas cliquable ✅
+     • "Variation" → Cliquable avec modal ✅
+
+════════════════════════════════════════════════════════════════
+
+Date de correction : 4 Décembre 2024
+Correction : Drill-down uniquement sur Variation Mensuelle
+
+
+
+
+
+

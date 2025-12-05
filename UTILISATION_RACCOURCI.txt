@@ -1,0 +1,120 @@
+╔═══════════════════════════════════════════════════════════════╗
+║                                                               ║
+║   ✅ RACCOURCI BUREAU CRÉÉ - TERVENE LICENSE MANAGER         ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+🎯 EMPLACEMENT DU RACCOURCI
+
+📍 Bureau Windows
+   Nom: "Tervene License Manager.lnk"
+   Icône: Application bleue
+
+═══════════════════════════════════════════════════════════════
+
+🚀 COMMENT UTILISER LE RACCOURCI
+
+1️⃣  Installez Node.js (si pas encore fait)
+    → https://nodejs.org/
+    → Version LTS recommandée
+
+2️⃣  Double-cliquez sur le raccourci "Tervene License Manager"
+    → Le terminal s'ouvrira automatiquement
+    → Les dépendances s'installeront (première fois seulement)
+    → L'application se lancera
+
+3️⃣  Le navigateur s'ouvrira automatiquement
+    → URL: http://localhost:3000
+    → Votre tableau de bord Tervene est prêt !
+
+═══════════════════════════════════════════════════════════════
+
+⚙️ CE QUE FAIT LE RACCOURCI AUTOMATIQUEMENT
+
+✅ Vérifie que Node.js est installé
+✅ Installe les dépendances (npm install) si nécessaire
+✅ Lance le serveur de développement (npm run dev)
+✅ Ouvre l'application dans votre navigateur
+✅ Affiche l'URL et l'état du serveur
+
+═══════════════════════════════════════════════════════════════
+
+🛑 COMMENT ARRÊTER L'APPLICATION
+
+Option 1: Appuyez sur Ctrl+C dans le terminal
+Option 2: Fermez la fenêtre du terminal
+
+═══════════════════════════════════════════════════════════════
+
+💡 CONSEILS D'UTILISATION
+
+• Première utilisation
+  → L'installation peut prendre 2-3 minutes
+  → Soyez patient pendant le téléchargement des dépendances
+
+• Utilisations suivantes
+  → Le démarrage sera instantané (< 5 secondes)
+
+• En cas de problème
+  → Le terminal affichera un message d'erreur clair
+  → Vérifiez que Node.js est bien installé
+  → Redémarrez votre ordinateur après l'installation de Node.js
+
+═══════════════════════════════════════════════════════════════
+
+📁 AUTRES FICHIERS UTILES
+
+• Lancer_Tervene.bat         → Script de démarrage
+• README.md                   → Documentation complète
+• DEMARRAGE_RAPIDE.md         → Guide rapide
+• STRUCTURE_PROJET.md         → Architecture
+
+═══════════════════════════════════════════════════════════════
+
+🎨 PERSONNALISATION DU RACCOURCI (Optionnel)
+
+Pour changer l'icône du raccourci:
+
+1. Clic droit sur le raccourci → Propriétés
+2. Cliquez sur "Changer d'icône"
+3. Choisissez une icône de votre choix
+4. Cliquez sur OK
+
+═══════════════════════════════════════════════════════════════
+
+✨ AVANTAGES DU RACCOURCI
+
+• Démarrage en un clic
+• Pas besoin d'ouvrir un terminal manuellement
+• Installation automatique des dépendances
+• Messages d'erreur clairs en cas de problème
+• Facile à partager avec d'autres utilisateurs
+
+═══════════════════════════════════════════════════════════════
+
+🔄 RECRÉER LE RACCOURCI
+
+Si vous supprimez le raccourci accidentellement:
+
+1. Ouvrez PowerShell dans le dossier du projet
+2. Exécutez: powershell -ExecutionPolicy Bypass -File "Creer_Raccourci_Bureau.ps1"
+3. Le raccourci sera recréé automatiquement
+
+═══════════════════════════════════════════════════════════════
+
+🎉 PRÊT À UTILISER !
+
+Votre raccourci "Tervene License Manager" est maintenant 
+disponible sur votre bureau Windows.
+
+Double-cliquez dessus pour commencer !
+
+═══════════════════════════════════════════════════════════════
+
+Développé pour Tervene - Gestion des Licences © 2024
+
+
+
+
+
+
